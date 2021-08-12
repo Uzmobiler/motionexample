@@ -5,7 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.doOnPreDraw
 import uz.mobiler.example.databinding.FragmentBlankBinding
+import android.os.Build
+import androidx.transition.Fade
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,14 +37,40 @@ class BlankFragment : Fragment() {
 
     lateinit var binding: FragmentBlankBinding
     lateinit var myAdapter: MyAdapter
+    lateinit var list: ArrayList<Int>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentBlankBinding.inflate(inflater, container, false)
-        myAdapter = MyAdapter()
+        loadData()
+        myAdapter = MyAdapter(list, object : MyAdapter.OnItemClickListener {
+            override fun onItemClick(a: Int, imageView: ImageView) {
+
+
+//                val firstFragment = FirstFragment.newInstance(a)
+//
+//                firstFragment.sharedElementEnterTransition = DetailsTransition()
+//                firstFragment.enterTransition = Fade()
+//                exitTransition = Fade()
+//                firstFragment.sharedElementReturnTransition = DetailsTransition()
+//                activity?.supportFragmentManager
+//                    ?.beginTransaction()
+//                    ?.addSharedElement(imageView, "transtion_name_example")
+//                    ?.replace(R.id.my_container, firstFragment)
+//                    ?.addToBackStack(null)
+//                    ?.commit()
+            }
+        })
         binding.rv.adapter = myAdapter
         return binding.root
+    }
+
+    private fun loadData() {
+        list = ArrayList()
+        for (i in 0..100) {
+            list.add(R.drawable.mdpi)
+        }
     }
 
     companion object {
